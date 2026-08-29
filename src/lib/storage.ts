@@ -25,6 +25,19 @@ export function saveState(state: PersistedState): void {
   localStorage.setItem(KEY, JSON.stringify(state));
 }
 
+export function parseBackup(raw: string): PersistedState | null {
+  try {
+    const parsed = JSON.parse(raw) as Partial<PersistedState>;
+    if (!parsed || typeof parsed !== "object") return null;
+    return {
+      notesBySchool: parsed.notesBySchool ?? {},
+      targetIds: Array.isArray(parsed.targetIds) ? parsed.targetIds : [],
+    };
+  } catch {
+    return null;
+  }
+}
+
 export function createNote(text: string): Note {
   return {
     id: crypto.randomUUID(),

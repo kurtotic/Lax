@@ -16,7 +16,7 @@ export function BrowsePage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <section className="mb-8 overflow-hidden rounded-3xl bg-field px-5 py-8 text-paper sm:px-8">
-        <p className="text-xs tracking-[0.22em] text-gold uppercase">NCAA women's lacrosse</p>
+        <p className="text-xs tracking-[0.22em] text-white/70 uppercase">NCAA women's lacrosse</p>
         <h1 className="display mt-2 max-w-2xl text-4xl leading-tight sm:text-5xl">
           Find the right program. Keep every conversation.
         </h1>
@@ -31,7 +31,7 @@ export function BrowsePage() {
             value={filters.query}
             onChange={(event) => setFilters((p) => ({ ...p, query: event.target.value }))}
             placeholder="Search school, city, conference, or coach — try Boston College"
-            className="w-full rounded-2xl border-0 bg-card py-3.5 pr-4 pl-12 text-ink outline-none ring-gold/40 placeholder:text-muted focus:ring-4"
+            className="w-full rounded-2xl border-0 bg-white py-3.5 pr-4 pl-12 text-ink outline-none ring-white/40 placeholder:text-muted focus:ring-4"
           />
         </label>
         <div className="mt-4 flex flex-wrap gap-2 text-xs text-paper/80">

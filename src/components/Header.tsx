@@ -8,7 +8,7 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-white/10 bg-field/95 text-paper backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <NavLink to="/" className="group flex items-center gap-3">
-          <span className="grid h-9 w-9 place-items-center rounded-lg bg-gold text-field shadow-sm">
+          <span className="grid h-9 w-9 place-items-center rounded-lg bg-white text-field shadow-sm">
             <svg viewBox="0 0 32 32" className="h-6 w-6" aria-hidden>
               <path
                 d="M9 24.5c4.2-7.4 7.8-14.2 14-18"
@@ -52,7 +52,7 @@ export function Header() {
           >
             Targets
             {targetIds.length > 0 && (
-              <span className="ml-1.5 inline-grid h-5 min-w-5 place-items-center rounded-full bg-gold px-1.5 text-[11px] font-semibold text-field">
+              <span className="ml-1.5 inline-grid h-5 min-w-5 place-items-center rounded-full bg-white px-1.5 text-[11px] font-semibold text-field">
                 {targetIds.length}
               </span>
             )}

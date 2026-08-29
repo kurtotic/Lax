@@ -32,7 +32,7 @@ export function NotesTimeline({ schoolId, schoolName }: { schoolId: string; scho
           onChange={(event) => setText(event.target.value)}
           placeholder={`Emailed ${schoolName} coach with file and tournament schedule.`}
           rows={3}
-          className="w-full resize-y rounded-xl border border-line bg-paper/50 px-3 py-2 text-sm outline-none ring-field/20 focus:ring-4"
+          className="w-full resize-y rounded-xl border border-line bg-white px-3 py-2 text-sm outline-none ring-field/20 focus:ring-4"
         />
         <div className="mt-2 flex items-center justify-between gap-3">
           <p className="text-xs text-muted">Date and time are stored with every note.</p>
@@ -46,15 +46,15 @@ export function NotesTimeline({ schoolId, schoolName }: { schoolId: string; scho
         </div>
       </form>
       {notes.length === 0 ? (
-        <p className="rounded-xl bg-paper/70 px-4 py-6 text-center text-sm text-muted">
+        <p className="rounded-xl bg-field/5 px-4 py-6 text-center text-sm text-muted">
           No notes yet. Track emails, camps, visits, and follow-ups here.
         </p>
       ) : (
         <ol className="relative space-y-4 border-l border-line pl-4">
           {notes.map((note) => (
             <li key={note.id} className="relative">
-              <span className="absolute top-1.5 -left-[21px] h-2.5 w-2.5 rounded-full bg-gold ring-4 ring-card" />
-              <div className="rounded-xl bg-paper/60 px-3 py-3">
+              <span className="absolute top-1.5 -left-[21px] h-2.5 w-2.5 rounded-full bg-field ring-4 ring-card" />
+              <div className="rounded-xl bg-field/5 px-3 py-3">
                 <div className="mb-1 flex items-start justify-between gap-3">
                   <p
                     className="inline-flex items-center gap-1.5 text-xs text-muted"
@@ -67,7 +67,7 @@ export function NotesTimeline({ schoolId, schoolName }: { schoolId: string; scho
                   <button
                     type="button"
                     onClick={() => deleteNote(schoolId, note.id)}
-                    className="rounded-full p-1 text-muted hover:bg-line/70 hover:text-clay"
+                    className="rounded-full p-1 text-muted hover:bg-line/70 hover:text-field"
                     aria-label="Delete note"
                   >
                     <Trash2 className="h-3.5 w-3.5" />

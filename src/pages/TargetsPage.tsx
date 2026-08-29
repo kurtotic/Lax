@@ -21,6 +21,7 @@ import { useRecruiting } from "../context/RecruitingStore";
 import { getSchool } from "../data/catalog";
 import { divisionLabel, money, pct } from "../lib/format";
 import { EmptyState } from "../components/EmptyState";
+import { DataBackup } from "../components/DataBackup";
 import type { School } from "../types";
 
 export function TargetsPage() {
@@ -45,7 +46,7 @@ export function TargetsPage() {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <p className="text-xs tracking-[0.22em] text-moss uppercase">Your board</p>
+      <p className="text-xs tracking-[0.22em] text-field uppercase">Your board</p>
       <h1 className="display mt-1 text-4xl">Target schools</h1>
       <p className="mt-2 max-w-xl text-sm text-muted">
         Rank the programs you are actively recruiting. Drag to reorder, or use the arrows. The
@@ -86,6 +87,7 @@ export function TargetsPage() {
           </SortableContext>
         </DndContext>
       )}
+      <DataBackup />
     </div>
   );
 }
@@ -113,19 +115,19 @@ function SortableTarget({
     <li
       ref={setNodeRef}
       style={{ transform: CSS.Transform.toString(transform), transition }}
-      className={`rounded-2xl border border-line bg-card p-3 shadow-sm ${isDragging ? "z-10 ring-2 ring-gold" : ""}`}
+      className={`rounded-2xl border border-line bg-card p-3 shadow-sm ${isDragging ? "z-10 ring-2 ring-field" : ""}`}
     >
       <div className="flex items-start gap-3">
         <button
           type="button"
-          className="mt-1 cursor-grab touch-none rounded-lg p-1 text-muted hover:bg-paper active:cursor-grabbing"
+          className="mt-1 cursor-grab touch-none rounded-lg p-1 text-muted hover:bg-field/5 active:cursor-grabbing"
           aria-label={`Drag to reorder ${school.name}`}
           {...attributes}
           {...listeners}
         >
           <GripVertical className="h-5 w-5" />
         </button>
-        <div className="display grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-field text-lg text-gold">
+        <div className="display grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-field text-lg text-white">
           {rank}
         </div>
         <div className="min-w-0 flex-1">
@@ -166,7 +168,7 @@ function SortableTarget({
           <button
             type="button"
             onClick={() => onRemove(school.id)}
-            className="text-xs font-medium text-clay hover:underline"
+            className="text-xs font-medium text-field hover:underline"
           >
             Remove
           </button>

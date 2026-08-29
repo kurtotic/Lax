@@ -44,7 +44,7 @@ export function FilterPanel({
         <button
           type="button"
           onClick={() => setFilters({ ...defaultFilters, sort: filters.sort })}
-          className="text-sm font-medium text-clay hover:underline"
+          className="text-sm font-medium text-field hover:underline"
         >
           Clear all
         </button>

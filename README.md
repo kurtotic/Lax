@@ -2,8 +2,6 @@
 
 A recruiting notebook for **NCAA women's lacrosse**. Search Division I, II, and III programs, filter by academics and location, save dated notes on each school, and keep a ranked target list.
 
-Built for a family that wants one calm place to compare programs — not another generic spreadsheet.
-
 ## Run locally
 
 ```bash
@@ -20,7 +18,33 @@ npm run build
 npm run preview
 ```
 
-No login. Notes and the target ranking are stored in the browser (`localStorage`) so they survive refresh.
+## Where notes and targets are saved
+
+Notes and the ranked target list are stored in **this browser on this device** (`localStorage` key `lax-recruiting-v1`). They survive refresh and closing the tab.
+
+They are **not** stored on a server, and they do **not** automatically appear on your iPhone, iPad, and computer at the same time. Safari on iPhone is a different browser from Chrome on a laptop.
+
+To copy your list between devices: open **Targets**, tap **Download backup**, then **Restore backup** on the other device.
+
+## Deploy a public link (iPhone, iPad, computer)
+
+The catalog can be opened from any device once the site is hosted. Two easy options:
+
+### Vercel (recommended)
+
+1. Open [vercel.com/new](https://vercel.com/new) and import the `kurtotic/Lax` GitHub repo.
+2. Leave the defaults (Vite / `npm run build` / `dist`) and deploy.
+3. Use the `*.vercel.app` URL on your phone, tablet, and computer.
+
+`vercel.json` is already in the repo so school detail links work on refresh.
+
+### GitHub Pages
+
+After this is on `main`:
+
+1. In the GitHub repo: **Settings → Pages → Source: GitHub Actions**.
+2. The workflow in `.github/workflows/deploy-pages.yml` publishes the site to  
+   **https://kurtotic.github.io/Lax/**
 
 ## What you can do
 
@@ -28,7 +52,7 @@ No login. Notes and the target ranking are stored in the browser (`localStorage`
 - Free-text search across school, city, state, conference, nickname, and coach.
 - Filter by division, region, state, conference, public/private, campus setting, enrollment, acceptance rate, retention, SAT mid-range, and in-state or out-of-state tuition.
 - Open a school page for academics, program info, and a notes timeline (newest first, with relative time and exact timestamp).
-- Flag target schools and reorder them with drag-and-drop or up/down arrows. Rank persists.
+- Flag target schools and reorder them with drag-and-drop or up/down arrows. Rank persists in this browser.
 
 Example path: search **Boston College** → open the school → add a note such as *Emailed Boston College coach with file and tournament schedule.*
 
