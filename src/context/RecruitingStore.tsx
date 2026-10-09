@@ -19,6 +19,7 @@ interface StoreValue extends PersistedState {
   setTargetOrder: (ids: string[]) => void;
   moveTarget: (schoolId: string, direction: -1 | 1) => void;
   targetRank: (schoolId: string) => number | null;
+  replaceAll: (next: PersistedState) => void;
 }
 
 const StoreContext = createContext<StoreValue | null>(null);
@@ -96,6 +97,10 @@ export function RecruitingProvider({ children }: { children: ReactNode }) {
     });
   }, []);
 
+  const replaceAll = useCallback((next: PersistedState) => {
+    setState(() => persist(next));
+  }, []);
+
   const targetRank = useCallback(
     (schoolId: string) => {
       const index = state.targetIds.indexOf(schoolId);
@@ -115,6 +120,7 @@ export function RecruitingProvider({ children }: { children: ReactNode }) {
       setTargetOrder,
       moveTarget,
       targetRank,
+      replaceAll,
     }),
     [
       state,
@@ -126,6 +132,7 @@ export function RecruitingProvider({ children }: { children: ReactNode }) {
       setTargetOrder,
       moveTarget,
       targetRank,
+      replaceAll,
     ],
   );
 

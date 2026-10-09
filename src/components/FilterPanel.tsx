@@ -44,7 +44,7 @@ export function FilterPanel({
         <button
           type="button"
           onClick={() => setFilters({ ...defaultFilters, sort: filters.sort })}
-          className="text-sm font-medium text-clay hover:underline"
+          className="text-sm font-medium text-field hover:underline"
         >
           Clear all
         </button>
@@ -120,60 +120,6 @@ export function FilterPanel({
             ["3to10", "3,000 – 10,000"],
             ["10to20", "10,000 – 20,000"],
             ["gt20", "20,000+"],
-          ]}
-        />
-      </Section>
-
-      <Section title="Acceptance rate">
-        <Select
-          value={filters.acceptance}
-          onChange={(acceptance) => setFilters((p) => ({ ...p, acceptance }))}
-          options={[
-            ["", "Any"],
-            ["lt20", "Under 20%"],
-            ["20to50", "20 – 50%"],
-            ["50to80", "50 – 80%"],
-            ["gt80", "80%+"],
-          ]}
-        />
-      </Section>
-
-      <Section title="Tuition">
-        <div className="mb-2 flex gap-2">
-          <Chip
-            on={filters.tuitionBasis === "inState"}
-            onClick={() => setFilters((p) => ({ ...p, tuitionBasis: "inState" }))}
-          >
-            In-state
-          </Chip>
-          <Chip
-            on={filters.tuitionBasis === "outOfState"}
-            onClick={() => setFilters((p) => ({ ...p, tuitionBasis: "outOfState" }))}
-          >
-            Out-of-state
-          </Chip>
-        </div>
-        <Select
-          value={filters.tuition}
-          onChange={(tuition) => setFilters((p) => ({ ...p, tuition }))}
-          options={[
-            ["", "Any tuition"],
-            ["lt20", "Under $20k"],
-            ["20to40", "$20k – $40k"],
-            ["40to60", "$40k – $60k"],
-            ["gt60", "$60k+"],
-          ]}
-        />
-      </Section>
-
-      <Section title="Retention">
-        <Select
-          value={filters.retention}
-          onChange={(retention) => setFilters((p) => ({ ...p, retention }))}
-          options={[
-            ["", "Any"],
-            ["80", "80% or higher"],
-            ["90", "90% or higher"],
           ]}
         />
       </Section>

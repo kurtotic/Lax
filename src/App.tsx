@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { RecruitingProvider } from "./context/RecruitingStore";
 import { Header } from "./components/Header";
 import { BrowsePage } from "./pages/BrowsePage";
+import { NotesPage } from "./pages/NotesPage";
 import { SchoolPage } from "./pages/SchoolPage";
 import { TargetsPage } from "./pages/TargetsPage";
 
@@ -9,11 +10,12 @@ export default function App() {
   return (
     <RecruitingProvider>
       <BrowserRouter>
-        <div className="flex min-h-screen flex-col">
+        <div className="flex min-h-screen flex-col bg-white">
           <Header />
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<BrowsePage />} />
+              <Route path="/notes" element={<NotesPage />} />
               <Route path="/schools/:id" element={<SchoolPage />} />
               <Route path="/targets" element={<TargetsPage />} />
               <Route path="*" element={<Navigate to="/" replace />} />

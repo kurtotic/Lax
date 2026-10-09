@@ -1,5 +1,9 @@
 import type { Filters, School } from "../types";
 
+export const ACCEPTANCE_RANGE = { min: 0, max: 100 };
+export const TUITION_RANGE = { min: 0, max: 70000 };
+export const RETENTION_RANGE = { min: 0, max: 100 };
+
 export const defaultFilters: Filters = {
   query: "",
   divisions: [],
@@ -9,10 +13,13 @@ export const defaultFilters: Filters = {
   control: "",
   setting: "",
   enrollment: "",
-  acceptance: "",
-  tuition: "",
+  acceptanceMin: ACCEPTANCE_RANGE.min,
+  acceptanceMax: ACCEPTANCE_RANGE.max,
+  tuitionMin: TUITION_RANGE.min,
+  tuitionMax: TUITION_RANGE.max,
   tuitionBasis: "outOfState",
-  retention: "",
+  retentionMin: RETENTION_RANGE.min,
+  retentionMax: RETENTION_RANGE.max,
   sat: "",
   sort: "name",
 };
@@ -27,9 +34,21 @@ export function activeFilterCount(filters: Filters): number {
   if (filters.control) n += 1;
   if (filters.setting) n += 1;
   if (filters.enrollment) n += 1;
-  if (filters.acceptance) n += 1;
-  if (filters.tuition) n += 1;
-  if (filters.retention) n += 1;
+  if (
+    filters.acceptanceMin > ACCEPTANCE_RANGE.min ||
+    filters.acceptanceMax < ACCEPTANCE_RANGE.max
+  ) {
+    n += 1;
+  }
+  if (filters.tuitionMin > TUITION_RANGE.min || filters.tuitionMax < TUITION_RANGE.max) {
+    n += 1;
+  }
+  if (
+    filters.retentionMin > RETENTION_RANGE.min ||
+    filters.retentionMax < RETENTION_RANGE.max
+  ) {
+    n += 1;
+  }
   if (filters.sat) n += 1;
   return n;
 }
@@ -128,27 +147,19 @@ export function filterSchools(schools: School[], filters: Filters): School[] {
       return false;
     }
     if (
-      !inBucket(school.acceptanceRate, filters.acceptance, {
-        lt20: [0, 20],
-        "20to50": [20, 50],
-        "50to80": [50, 80],
-        gt80: [80, Infinity],
-      })
+      school.acceptanceRate < filters.acceptanceMin ||
+      school.acceptanceRate > filters.acceptanceMax
     ) {
       return false;
     }
+    const tuition = tuitionOf(school);
+    if (tuition < filters.tuitionMin || tuition > filters.tuitionMax) return false;
     if (
-      !inBucket(tuitionOf(school), filters.tuition, {
-        lt20: [0, 20000],
-        "20to40": [20000, 40000],
-        "40to60": [40000, 60000],
-        gt60: [60000, Infinity],
-      })
+      school.retentionRate < filters.retentionMin ||
+      school.retentionRate > filters.retentionMax
     ) {
       return false;
     }
-    if (filters.retention === "80" && school.retentionRate < 80) return false;
-    if (filters.retention === "90" && school.retentionRate < 90) return false;
     if (filters.sat === "1200" && school.satMid < 1200) return false;
     if (filters.sat === "1300" && school.satMid < 1300) return false;
     if (filters.sat === "1400" && school.satMid < 1400) return false;

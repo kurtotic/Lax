@@ -5,16 +5,16 @@ import { TargetButton } from "./TargetButton";
 
 export function SchoolCard({ school }: { school: School }) {
   return (
-    <article className="group relative rounded-2xl border border-line bg-card p-4 shadow-[0_1px_0_rgba(20,38,28,0.04)] transition hover:-translate-y-0.5 hover:border-moss/30 hover:shadow-md">
+    <article className="group relative rounded-2xl border border-line bg-white p-4 shadow-[0_1px_0_rgba(11,31,58,0.04)] transition hover:-translate-y-0.5 hover:border-field/30 hover:shadow-md">
       <div className="flex items-start justify-between gap-3">
         <Link to={`/schools/${school.id}`} className="min-w-0 flex-1">
           <div className="mb-2 flex flex-wrap items-center gap-2">
             <span
               className={`rounded-full px-2 py-0.5 text-[11px] font-semibold tracking-wide ${
                 school.division === "I"
-                  ? "bg-gold/20 text-[#8a6a1d]"
+                  ? "bg-field text-white"
                   : school.division === "II"
-                    ? "bg-moss/15 text-moss"
+                    ? "bg-field/10 text-field"
                     : "bg-ink/8 text-ink"
               }`}
             >

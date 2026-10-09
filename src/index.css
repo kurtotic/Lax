@@ -1,17 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
-  --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
-  --color-paper: #f3eee4;
-  --color-ink: #14261c;
-  --color-field: #1a3c2c;
-  --color-moss: #3d6b4f;
-  --color-gold: #c4a35a;
-  --color-clay: #c45c26;
-  --color-card: #fffaf3;
-  --color-line: #e4d9c8;
-  --color-muted: #6d645a;
+  --font-display: "EB Garamond", "Palatino Linotype", Palatino, serif;
+  --font-sans: "EB Garamond", "Palatino Linotype", Palatino, serif;
+  --color-paper: #ffffff;
+  --color-ink: #0b1f3a;
+  --color-field: #0b1f3a;
+  --color-moss: #1e3a5f;
+  --color-card: #ffffff;
+  --color-line: #d5deea;
+  --color-muted: #4d5e78;
 }
 
 html {
@@ -21,12 +19,11 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background:
-    radial-gradient(1200px 500px at 10% -10%, rgba(196, 163, 90, 0.18), transparent 55%),
-    radial-gradient(900px 420px at 110% 0%, rgba(61, 107, 79, 0.14), transparent 50%),
-    var(--color-paper);
+  background: #ffffff;
   color: var(--color-ink);
   font-family: var(--font-sans);
+  font-size: 1.125rem;
+  line-height: 1.5;
 }
 
 #root {
@@ -35,13 +32,77 @@ body {
 
 .display {
   font-family: var(--font-display);
+  font-weight: 600;
 }
 
-.pitch-lines {
-  background-image:
-    linear-gradient(to right, rgba(26, 60, 44, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(26, 60, 44, 0.05) 1px, transparent 1px);
-  background-size: 48px 48px;
+.dual-range {
+  position: relative;
+  height: 1.75rem;
+}
+
+.dual-range-track,
+.dual-range-fill {
+  position: absolute;
+  top: 50%;
+  height: 2px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+}
+
+.dual-range-track {
+  right: 0;
+  left: 0;
+  background: #d5deea;
+}
+
+.dual-range-fill {
+  background: #0b1f3a;
+}
+
+.dual-range input[type="range"] {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1.75rem;
+  margin: 0;
+  pointer-events: none;
+  appearance: none;
+  background: transparent;
+}
+
+.dual-range input[type="range"]::-webkit-slider-runnable-track {
+  height: 2px;
+  background: transparent;
+}
+
+.dual-range input[type="range"]::-webkit-slider-thumb {
+  width: 16px;
+  height: 16px;
+  margin-top: -7px;
+  pointer-events: auto;
+  appearance: none;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  background: #0b1f3a;
+  box-shadow: 0 0 0 1px #0b1f3a;
+  cursor: pointer;
+}
+
+.dual-range input[type="range"]::-moz-range-track {
+  height: 2px;
+  background: transparent;
+  border: none;
+}
+
+.dual-range input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  pointer-events: auto;
+  border: 2px solid #ffffff;
+  border-radius: 999px;
+  background: #0b1f3a;
+  box-shadow: 0 0 0 1px #0b1f3a;
+  cursor: pointer;
 }
 
 ::-webkit-scrollbar {
@@ -50,6 +111,6 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbbda8;
+  background: #9eb0c6;
   border-radius: 999px;
 }
