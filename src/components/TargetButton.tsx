@@ -22,8 +22,8 @@ export function TargetButton({
       }}
       className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-medium transition ${
         on
-          ? "border-clay/30 bg-clay text-white shadow-sm"
-          : "border-line bg-card text-ink hover:border-clay/40 hover:text-clay"
+          ? "border-field bg-field text-white shadow-sm"
+          : "border-line bg-white text-ink hover:border-field/40"
       }`}
       aria-pressed={on}
     >

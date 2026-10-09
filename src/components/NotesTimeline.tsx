@@ -53,7 +53,7 @@ export function NotesTimeline({ schoolId, schoolName }: { schoolId: string; scho
         <ol className="relative space-y-4 border-l border-line pl-4">
           {notes.map((note) => (
             <li key={note.id} className="relative">
-              <span className="absolute top-1.5 -left-[21px] h-2.5 w-2.5 rounded-full bg-gold ring-4 ring-card" />
+              <span className="absolute top-1.5 -left-[21px] h-2.5 w-2.5 rounded-full bg-field ring-4 ring-white" />
               <div className="rounded-xl bg-paper/60 px-3 py-3">
                 <div className="mb-1 flex items-start justify-between gap-3">
                   <p
@@ -67,7 +67,7 @@ export function NotesTimeline({ schoolId, schoolName }: { schoolId: string; scho
                   <button
                     type="button"
                     onClick={() => deleteNote(schoolId, note.id)}
-                    className="rounded-full p-1 text-muted hover:bg-line/70 hover:text-clay"
+                    className="rounded-full p-1 text-muted hover:bg-line/70 hover:text-ink"
                     aria-label="Delete note"
                   >
                     <Trash2 className="h-3.5 w-3.5" />

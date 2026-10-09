@@ -14,7 +14,7 @@ export function SchoolPage() {
       <div className="mx-auto max-w-3xl px-4 py-16 text-center">
         <h1 className="display text-3xl">School not found</h1>
         <p className="mt-2 text-muted">That program is not in the catalog.</p>
-        <Link to="/" className="mt-6 inline-block font-medium text-clay hover:underline">
+        <Link to="/" className="mt-6 inline-block font-medium text-field hover:underline">
           Back to programs
         </Link>
       </div>
@@ -38,7 +38,7 @@ export function SchoolPage() {
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
               <div className="mb-2 flex flex-wrap items-center gap-2 text-xs">
-                <span className="rounded-full bg-gold/20 px-2 py-0.5 font-semibold text-gold">
+                <span className="rounded-full bg-white/15 px-2 py-0.5 font-semibold text-white">
                   {divisionLabel(school.division)} women's lacrosse
                 </span>
                 <span className="text-paper/70">{school.conference}</span>

@@ -11,7 +11,7 @@ export function EmptyState({
 }) {
   return (
     <div className="rounded-2xl border border-dashed border-line bg-card/60 px-6 py-14 text-center">
-      <div className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-full bg-paper text-moss">
+      <div className="mx-auto mb-3 grid h-12 w-12 place-items-center rounded-full bg-field/5 text-field">
         <SearchX className="h-6 w-6" />
       </div>
       <h2 className="display text-2xl">{title}</h2>

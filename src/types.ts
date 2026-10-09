@@ -76,10 +76,13 @@ export interface Filters {
   control: Control | "";
   setting: Setting | "";
   enrollment: "" | "lt3" | "3to10" | "10to20" | "gt20";
-  acceptance: "" | "lt20" | "20to50" | "50to80" | "gt80";
-  tuition: "" | "lt20" | "20to40" | "40to60" | "gt60";
+  acceptanceMin: number;
+  acceptanceMax: number;
+  tuitionMin: number;
+  tuitionMax: number;
   tuitionBasis: TuitionBasis;
-  retention: "" | "80" | "90";
+  retentionMin: number;
+  retentionMax: number;
   sat: "" | "1200" | "1300" | "1400";
   sort: SortKey;
 }

@@ -26,9 +26,10 @@ No login. Notes and the target ranking are stored in the browser (`localStorage`
 
 - Browse **549** women's lacrosse programs (133 D1, 115 D2, 301 D3).
 - Free-text search across school, city, state, conference, nickname, and coach.
-- Filter by division, region, state, conference, public/private, campus setting, enrollment, acceptance rate, retention, SAT mid-range, and in-state or out-of-state tuition.
+- Filter by division, region, state, conference, public/private, campus setting, enrollment, and SAT mid-range. Acceptance rate, tuition, and retention use range sliders on the front page (in-state or out-of-state tuition).
 - Open a school page for academics, program info, and a notes timeline (newest first, with relative time and exact timestamp).
-- Flag target schools and reorder them with drag-and-drop or up/down arrows. Rank persists.
+- Open **Notes** to see every comment, newest first, filtered by school or date.
+- Flag target schools and reorder them with drag-and-drop or up/down arrows. Rank persists. Download or restore a localStorage backup from the targets page.
 
 Example path: search **Boston College** → open the school → add a note such as *Emailed Boston College coach with file and tournament schedule.*
 
