@@ -19,7 +19,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { ChevronDown, ChevronUp, GripVertical, MapPin } from "lucide-react";
 import { useRecruiting } from "../context/RecruitingStore";
 import { getSchool } from "../data/catalog";
-import { divisionLabel, money, pct } from "../lib/format";
+import { divisionLabel, pct } from "../lib/format";
 import { DataBackup } from "../components/DataBackup";
 import { EmptyState } from "../components/EmptyState";
 import type { School } from "../types";
@@ -141,7 +141,7 @@ function SortableTarget({
           <p className="mt-1 flex items-center gap-1 text-xs text-muted">
             <MapPin className="h-3.5 w-3.5" />
             {school.city}, {school.stateCode} · {pct(school.acceptanceRate)} admit ·{" "}
-            {money(school.tuitionOutOfState)}
+            {pct(school.retentionRate)} retention
           </p>
         </div>
         <div className="flex flex-col items-end gap-1">

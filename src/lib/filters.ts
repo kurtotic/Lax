@@ -53,6 +53,28 @@ export function activeFilterCount(filters: Filters): number {
   return n;
 }
 
+function passesRange(
+  value: number | null,
+  min: number,
+  max: number,
+  bounds: { min: number; max: number },
+): boolean {
+  const unrestricted = min <= bounds.min && max >= bounds.max;
+  if (value == null) return unrestricted;
+  return value >= min && value <= max;
+}
+
+function compareNumbers(
+  a: number | null,
+  b: number | null,
+  direction: "asc" | "desc",
+): number {
+  if (a == null && b == null) return 0;
+  if (a == null) return 1;
+  if (b == null) return -1;
+  return direction === "asc" ? a - b : b - a;
+}
+
 function inBucket<T extends string>(
   value: number,
   bucket: T,
@@ -93,6 +115,8 @@ export function haystack(school: School): string {
     school.region,
     school.conference,
     school.coach,
+    school.coachEmail,
+    school.testPolicy,
     school.control,
     school.setting,
     `D${school.division}`,
@@ -122,7 +146,7 @@ export function filterSchools(schools: School[], filters: Filters): School[] {
     if (filters.divisions.length && !filters.divisions.includes(school.division)) {
       return false;
     }
-    if (filters.regions.length && !filters.regions.includes(school.region)) {
+    if (filters.regions.length && (!school.region || !filters.regions.includes(school.region))) {
       return false;
     }
     if (filters.states.length && !filters.states.includes(school.stateCode)) {
@@ -136,48 +160,66 @@ export function filterSchools(schools: School[], filters: Filters): School[] {
     }
     if (filters.control && school.control !== filters.control) return false;
     if (filters.setting && school.setting !== filters.setting) return false;
+    if (filters.enrollment) {
+      if (school.enrollment == null) return false;
+      if (
+        !inBucket(school.enrollment, filters.enrollment, {
+          lt3: [0, 3000],
+          "3to10": [3000, 10000],
+          "10to20": [10000, 20000],
+          gt20: [20000, Infinity],
+        })
+      ) {
+        return false;
+      }
+    }
     if (
-      !inBucket(school.enrollment, filters.enrollment, {
-        lt3: [0, 3000],
-        "3to10": [3000, 10000],
-        "10to20": [10000, 20000],
-        gt20: [20000, Infinity],
-      })
+      !passesRange(
+        school.acceptanceRate,
+        filters.acceptanceMin,
+        filters.acceptanceMax,
+        ACCEPTANCE_RANGE,
+      )
     ) {
       return false;
     }
     if (
-      school.acceptanceRate < filters.acceptanceMin ||
-      school.acceptanceRate > filters.acceptanceMax
+      !passesRange(tuitionOf(school), filters.tuitionMin, filters.tuitionMax, TUITION_RANGE)
     ) {
       return false;
     }
-    const tuition = tuitionOf(school);
-    if (tuition < filters.tuitionMin || tuition > filters.tuitionMax) return false;
     if (
-      school.retentionRate < filters.retentionMin ||
-      school.retentionRate > filters.retentionMax
+      !passesRange(
+        school.retentionRate,
+        filters.retentionMin,
+        filters.retentionMax,
+        RETENTION_RANGE,
+      )
     ) {
       return false;
     }
-    if (filters.sat === "1200" && school.satMid < 1200) return false;
-    if (filters.sat === "1300" && school.satMid < 1300) return false;
-    if (filters.sat === "1400" && school.satMid < 1400) return false;
+    if (filters.sat) {
+      const floor = Number(filters.sat);
+      if (school.satMid == null || school.satMid < floor) return false;
+    }
     return true;
   });
 
   result = [...result].sort((a, b) => {
     switch (filters.sort) {
       case "acceptance":
-        return a.acceptanceRate - b.acceptanceRate;
+        return compareNumbers(a.acceptanceRate, b.acceptanceRate, "asc");
       case "enrollment":
-        return b.enrollment - a.enrollment;
+        return compareNumbers(a.enrollment, b.enrollment, "desc");
       case "tuition":
-        return tuitionOf(a) - tuitionOf(b);
+        return compareNumbers(tuitionOf(a), tuitionOf(b), "asc");
       case "retention":
-        return b.retentionRate - a.retentionRate;
+        return compareNumbers(a.retentionRate, b.retentionRate, "desc");
       case "titles":
-        return b.ncaaTitles - a.ncaaTitles || b.ncaaAppearances - a.ncaaAppearances;
+        return (
+          compareNumbers(a.ncaaTitles, b.ncaaTitles, "desc") ||
+          compareNumbers(a.ncaaAppearances, b.ncaaAppearances, "desc")
+        );
       default:
         return a.name.localeCompare(b.name);
     }
