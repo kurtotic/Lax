@@ -4,22 +4,26 @@ const currency = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 0,
 });
 
-const compact = new Intl.NumberFormat("en-US", {
-  notation: "compact",
-  maximumFractionDigits: 1,
-});
-
-export function money(value: number): string {
-  if (value === 0) return "Service academy";
+export function money(value: number | null): string {
+  if (value == null) return "Not listed";
   return currency.format(value);
 }
 
-export function people(value: number): string {
-  return compact.format(value);
+export function people(value: number | null): string {
+  if (value == null) return "Not listed";
+  return value.toLocaleString("en-US");
 }
 
-export function pct(value: number): string {
-  return `${value}%`;
+export function pct(value: number | null): string {
+  if (value == null || Number.isNaN(value)) return "Not listed";
+  const rounded = Math.round(value * 10) / 10;
+  const text = Number.isInteger(rounded) ? rounded.toFixed(0) : String(rounded);
+  return `${text}%`;
+}
+
+export function listed(value: string | null | undefined): string {
+  const text = value?.trim();
+  return text ? text : "Not listed";
 }
 
 export function divisionLabel(division: string): string {

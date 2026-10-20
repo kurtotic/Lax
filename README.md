@@ -24,7 +24,7 @@ No login. Notes and the target ranking are stored in the browser (`localStorage`
 
 ## What you can do
 
-- Browse **549** women's lacrosse programs (133 D1, 115 D2, 301 D3).
+- Browse **562** women's lacrosse programs (132 D1, 127 D2, 303 D3).
 - Free-text search across school, city, state, conference, nickname, and coach.
 - Filter by division, region, state, conference, public/private, campus setting, enrollment, and SAT mid-range. Acceptance rate, tuition, and retention use range sliders on the front page (in-state or out-of-state tuition).
 - Open a school page for academics, program info, and a notes timeline (newest first, with relative time and exact timestamp).
@@ -35,17 +35,11 @@ Example path: search **Boston College** → open the school → add a note such 
 
 ## Data
 
-Program names, cities, states, conferences, nicknames, and (for Division I) NCAA appearance/title counts are compiled from public lists:
+School names, locations, public/private, conference, division, enrollment, admit rate, SAT range and mean, test policy, graduation rate, retention, coach, and coach email come from `scripts/schools_from_sheet.csv` (a Google Sheet export). Empty cells stay empty and show as “Not listed.” The catalog does not estimate tuition, campus setting, nicknames, or NCAA totals.
 
-- [Wikipedia: NCAA Division I lacrosse programs](https://en.wikipedia.org/wiki/List_of_NCAA_Division_I_lacrosse_programs) (women's table, 2026/27 affiliations)
-- [Wikipedia: NCAA Division II lacrosse programs](https://en.wikipedia.org/wiki/List_of_NCAA_Division_II_lacrosse_programs) (women's table)
-- Public D3 directories (ProductiveRecruit D3 women's lacrosse listing)
+Schools that were already on the site but are not in the sheet stay listed by name, division, conference, and location, with coach and stat fields cleared, so older saved notes can still open them.
 
-**Academic stats** (enrollment, acceptance, retention, tuition, SAT/ACT) are approximate. Well-known schools use commonly published College Board / IPEDS-style ranges; remaining schools use stable estimated ranges so filters still work. They are for fit exploration, not official NCAA or registrar data. Confirm everything on the school's site before you apply.
-
-**Head coaches** for flagship programs use commonly published staff names. Remaining coach names are placeholders so search still works — always verify on the athletics roster.
-
-To regenerate `src/data/schools.json` after updating the Wikipedia dumps in `/tmp`:
+Rebuild the catalog after editing the sheet:
 
 ```bash
 npm run generate:data

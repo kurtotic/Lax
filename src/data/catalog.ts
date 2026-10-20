@@ -15,8 +15,8 @@ export function getSchool(id: string): School | undefined {
   return schoolsById[id];
 }
 
-export const allStates = [...new Set(schools.map((s) => s.stateCode))].sort();
-export const allConferences = [...new Set(schools.map((s) => s.conference))].sort(
+export const allStates = [...new Set(schools.map((s) => s.stateCode).filter(Boolean))].sort();
+export const allConferences = [...new Set(schools.map((s) => s.conference).filter(Boolean))].sort(
   (a, b) => a.localeCompare(b),
 );
 export const allRegions = [

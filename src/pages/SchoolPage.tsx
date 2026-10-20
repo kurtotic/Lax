@@ -1,7 +1,8 @@
+import type { ReactNode } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, GraduationCap, MapPin, Trophy, Users } from "lucide-react";
+import { ArrowLeft, GraduationCap, MapPin, Users } from "lucide-react";
 import { getSchool } from "../data/catalog";
-import { divisionLabel, money, people, pct } from "../lib/format";
+import { divisionLabel, listed, money, people, pct } from "../lib/format";
 import { NotesTimeline } from "../components/NotesTimeline";
 import { TargetButton } from "../components/TargetButton";
 
@@ -20,8 +21,6 @@ export function SchoolPage() {
       </div>
     );
   }
-
-  const tuitionSame = school.tuitionInState === school.tuitionOutOfState;
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">
@@ -57,22 +56,10 @@ export function SchoolPage() {
         </div>
 
         <div className="grid gap-3 p-5 sm:grid-cols-2 sm:p-8 lg:grid-cols-4">
-          <Fact icon={Users} label="Undergraduate / total size" value={people(school.enrollment)} />
+          <Fact icon={Users} label="Undergraduate enrollment" value={people(school.enrollment)} />
           <Fact icon={GraduationCap} label="Acceptance rate" value={pct(school.acceptanceRate)} />
           <Fact icon={GraduationCap} label="Retention rate" value={pct(school.retentionRate)} />
-          <Fact
-            icon={Trophy}
-            label="NCAA tournament"
-            value={
-              school.ncaaTitles
-                ? `${school.ncaaTitles} title${school.ncaaTitles === 1 ? "" : "s"} · ${school.ncaaAppearances} bids`
-                : school.ncaaAppearances
-                  ? `${school.ncaaAppearances} appearances`
-                  : school.firstSeason
-                    ? `First season ${school.firstSeason}`
-                    : "See athletics site"
-            }
-          />
+          <Fact icon={GraduationCap} label="Graduation rate" value={pct(school.graduationRate)} />
         </div>
       </section>
 
@@ -80,26 +67,22 @@ export function SchoolPage() {
         <section className="rounded-2xl border border-line bg-card p-5">
           <h2 className="display text-2xl">Academics & cost</h2>
           <dl className="mt-4 divide-y divide-line text-sm">
-            <Row label="School type" value={`${capitalize(school.control)} · ${school.setting}`} />
-            <Row label="Enrollment" value={school.enrollment.toLocaleString()} />
+            <Row
+              label="School type"
+              value={school.control ? capitalize(school.control) : "Not listed"}
+            />
+            <Row label="Enrollment" value={people(school.enrollment)} />
             <Row label="Acceptance rate" value={pct(school.acceptanceRate)} />
             <Row label="First-year retention" value={pct(school.retentionRate)} />
-            <Row
-              label="SAT mid-range"
-              value={school.satMid ? String(school.satMid) : "Not listed"}
-            />
-            <Row label="ACT mid-range" value={school.actMid ? String(school.actMid) : "Not listed"} />
-            <Row
-              label={tuitionSame ? "Tuition" : "In-state tuition"}
-              value={money(school.tuitionInState)}
-            />
-            {!tuitionSame && (
-              <Row label="Out-of-state tuition" value={money(school.tuitionOutOfState)} />
-            )}
+            <Row label="Graduation rate" value={pct(school.graduationRate)} />
+            <Row label="SAT range" value={listed(school.satRange)} />
+            <Row label="SAT mean" value={school.satMean == null ? "Not listed" : String(school.satMean)} />
+            <Row label="Test policy" value={listed(school.testPolicy)} />
+            <Row label="Tuition" value={money(school.tuitionOutOfState)} />
           </dl>
           <p className="mt-4 text-xs leading-relaxed text-muted">
-            Academic figures are approximate published ranges for recruiting fit — confirm on the
-            school's admissions site before you apply.
+            Figures come from the recruiting sheet. Not listed means that cell was empty — nothing
+            here is estimated. Confirm stats with the school before you apply.
           </p>
         </section>
 
@@ -108,14 +91,9 @@ export function SchoolPage() {
           <dl className="mt-4 divide-y divide-line text-sm">
             <Row label="Division" value={`NCAA Division ${school.division}`} />
             <Row label="Conference" value={school.conference} />
-            <Row label="Head coach" value={school.coach} />
-            <Row
-              label="First season"
-              value={school.firstSeason ? String(school.firstSeason) : "Not listed"}
-            />
-            <Row label="NCAA appearances" value={String(school.ncaaAppearances)} />
-            <Row label="NCAA titles" value={String(school.ncaaTitles)} />
-            <Row label="Region" value={`${school.region} · ${school.city}, ${school.stateCode}`} />
+            <Row label="Head coach" value={listed(school.coach)} />
+            <Row label="Coach email" value={<EmailValue value={school.coachEmail} />} />
+            <Row label="Region" value={school.region ? `${school.region} · ${school.city}, ${school.stateCode}` : `${school.city}, ${school.stateCode}`} />
           </dl>
         </section>
       </div>
@@ -147,12 +125,29 @@ function Fact({
   );
 }
 
-function Row({ label, value }: { label: string; value: string }) {
+function Row({ label, value }: { label: string; value: ReactNode }) {
   return (
     <div className="flex items-baseline justify-between gap-4 py-2.5">
       <dt className="text-muted">{label}</dt>
       <dd className="text-right font-medium">{value}</dd>
     </div>
+  );
+}
+
+function EmailValue({ value }: { value: string }) {
+  const text = value.trim();
+  if (!text) return "Not listed";
+  const match = text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i);
+  if (!match) return text;
+  const email = match[0];
+  const note = text.replace(email, "").trim();
+  return (
+    <>
+      <a className="underline" href={`mailto:${email}`}>
+        {email}
+      </a>
+      {note ? ` ${note}` : null}
+    </>
   );
 }
 

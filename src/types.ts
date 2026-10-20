@@ -17,22 +17,28 @@ export interface School {
   city: string;
   state: string;
   stateCode: string;
-  region: Region;
+  region: Region | "";
   division: Division;
   conference: string;
   firstSeason: number | null;
-  ncaaAppearances: number;
-  ncaaTitles: number;
-  enrollment: number;
-  acceptanceRate: number;
-  retentionRate: number;
-  tuitionInState: number;
-  tuitionOutOfState: number;
-  control: Control;
-  setting: Setting;
-  satMid: number;
-  actMid: number;
+  ncaaAppearances: number | null;
+  ncaaTitles: number | null;
+  enrollment: number | null;
+  acceptanceRate: number | null;
+  retentionRate: number | null;
+  graduationRate: number | null;
+  tuitionInState: number | null;
+  tuitionOutOfState: number | null;
+  control: Control | "";
+  setting: Setting | "";
+  satRange: string;
+  satMean: number | null;
+  /** Mean when the sheet has one, otherwise the midpoint of a numeric SAT range. Used only for the SAT filter. */
+  satMid: number | null;
+  testPolicy: string;
+  actMid: number | null;
   coach: string;
+  coachEmail: string;
 }
 
 export interface CatalogFile {

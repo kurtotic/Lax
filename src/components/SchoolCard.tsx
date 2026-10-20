@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import type { School } from "../types";
-import { divisionLabel, money, people, pct } from "../lib/format";
+import { divisionLabel, people, pct } from "../lib/format";
 import { TargetButton } from "./TargetButton";
 
 export function SchoolCard({ school }: { school: School }) {
@@ -36,14 +36,15 @@ export function SchoolCard({ school }: { school: School }) {
         <Stat label="Enrollment" value={people(school.enrollment)} />
         <Stat label="Admit" value={pct(school.acceptanceRate)} />
         <Stat label="Retention" value={pct(school.retentionRate)} />
-        <Stat
-          label={school.control === "public" ? "OOS tuition" : "Tuition"}
-          value={money(school.tuitionOutOfState)}
-        />
+        <Stat label="Grad rate" value={pct(school.graduationRate)} />
       </Link>
       <p className="mt-3 text-xs text-muted">
-        {school.control === "public" ? "Public" : "Private"} · {school.setting} · Coach{" "}
-        {school.coach}
+        {[
+          school.control === "public" ? "Public" : school.control === "private" ? "Private" : "",
+          school.coach ? `Coach ${school.coach}` : "Coach not listed",
+        ]
+          .filter(Boolean)
+          .join(" · ")}
       </p>
     </article>
   );
